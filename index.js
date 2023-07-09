@@ -1,5 +1,5 @@
 import contactsService from "./contacts.js";
-import yargs from "yargs";
+import { program } from "commander";
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
@@ -24,5 +24,14 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-const { argv } = yargs(process.argv.slice(2));
-invokeAction(argv);
+program
+    .option("-a, --action <type>")
+    .option("-i, --id <type>")
+    .option("-n, --name <type>")
+    .option("-e, --email <type>")
+    .option("-p, --phone <type>")
+
+    program.parse();
+
+    const options = program.opts();
+    invokeAction(options);
